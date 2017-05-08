@@ -10,8 +10,8 @@ cp /etc/network/interfaces /etc/network/interfaces.old
 
 cat > /etc/network/interfaces <<- ENDINT
 auto wlan0
-iface wlan0 inet static
-     address "fd87:9ef2:9e19:34e1:$car_number"
+iface wlan0 inet6 static
+     address fd87:9ef2:9e19:34e1:$car_number
      netmask 64
      wireless-channel 6
      wireless-essid VehicularNet
@@ -24,5 +24,5 @@ sudo ifup wlan0
 
 # Install dependencies
 # =========================
-sudo apt-get update
-sudo apt-get install jstest-gtk
+# sudo apt-get update
+# sudo apt-get install jstest-gtk
