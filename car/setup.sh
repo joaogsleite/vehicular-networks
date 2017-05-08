@@ -14,7 +14,7 @@ iface wlan0 inet static
      address "fd87:9ef2:9e19:34e1:$car_number"
      netmask 64
      wireless-channel 6
-     wireless-essid AdHocNetwork
+     wireless-essid VehicularNet
      wireless-mode ad-hoc
 ENDINT
 sudo ifdown wlan0

@@ -23,10 +23,8 @@ def send():
     s2.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
     while True:
         print "sending..."
-        s2.sendto("im alive", ("<broadcast>",port))
+        s2.sendto("I'm alive", ("<broadcast>",port))
         sleep(5)
-
-
 
 
 thread1 = Thread(target = recv, args = ())
