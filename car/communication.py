@@ -1,34 +1,54 @@
-from socket import *
-from time import *
-from threading import Thread
+import signal
+import sys
+
+import socket
+import time
+import threading
 
 port=4173
+running = True
+
+s_recv = socket.socket(socket.AF_INET6, socket.SOCK_DGRAM)
+s_send = socket.socket(socket.AF_INET6, socket.SOCK_DGRAM)
 
 def recv():
-    s=socket(AF_INET, SOCK_DGRAM)
-    s.bind(('',port))
-    while True:
+    s_recv.bind(('::',port))
+    while running:
         print "receiving..."
-        data, address = s.recvfrom(5)
-        print address
-        print data
-        if address != gethostname():
-            print data
-
-
+        data, address = s_recv.recvfrom(10)
+        print "received:", data
 
 def send():
-    s2=socket(AF_INET, SOCK_DGRAM)
-    s2.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
-    s2.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
-    while True:
+    while running:
         print "sending..."
-        s2.sendto("I'm alive", ("<broadcast>",port))
-        sleep(5)
+        print running
+        s_send.sendto("I'm alive", ("FF02::1",port))
+        time.sleep(5)
+
+thread_recv = threading.Thread(target = recv, args = ())
+thread_recv.start()
+thread_send = threading.Thread(target = send, args = ())
+thread_send.start()
 
 
-thread1 = Thread(target = recv, args = ())
-thread1.start()
-thread2 = Thread(target = send, args = ())
-thread2.start()
-send()
+def signal_handler(signal, frame):
+    print('Closing sockets...')
+
+    global running
+    global s_recv
+    global s_send
+
+    running = False
+
+    try:
+        s_recv.shutdown(socket.SHUT_RDWR)
+    except socket.error:
+        print 'Socket_receive closed'
+
+    try:
+        s_send.shutdown(socket.SHUT_RDWR)
+    except socket.error:
+        print 'Socket_send closed'
+
+signal.signal(signal.SIGINT, signal_handler)
+signal.pause()
