@@ -4,25 +4,22 @@ import sys
 import socket
 import time
 import threading
+import json
 
-port=4173
+from gps import getLocation
+
 running = True
 
-s_recv = socket.socket(socket.AF_INET6, socket.SOCK_DGRAM)
-s_send = socket.socket(socket.AF_INET6, socket.SOCK_DGRAM)
-
 def recv():
-    s_recv.bind(('::',port))
     while running:
         print "receiving..."
-        data, address = s_recv.recvfrom(10)
+        #data, address = s_recv.recvfrom(10)
         print "received:", data
 
 def send():
     while running:
         print "sending..."
-        print running
-        s_send.sendto("I'm alive", ("FF02::1",port))
+        #s_send.sendto("I'm alive", ("FF02::1",port))
         time.sleep(5)
 
 thread_recv = threading.Thread(target = recv, args = ())
@@ -41,12 +38,12 @@ def signal_handler(signal, frame):
     running = False
 
     try:
-        s_recv.shutdown(socket.SHUT_RDWR)
+        socket_receive.shutdown(socket.SHUT_RDWR)
     except socket.error:
         print 'Socket_receive closed'
 
     try:
-        s_send.shutdown(socket.SHUT_RDWR)
+        socket_send.shutdown(socket.SHUT_RDWR)
     except socket.error:
         print 'Socket_send closed'
 
