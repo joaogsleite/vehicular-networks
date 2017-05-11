@@ -37,6 +37,6 @@ def received(message):
 
         if msg['type'] == 4:
             centerITS_messages.append(msg)
-            print centerITS_feedback
+            print centerITS_messages
         else:
             continue

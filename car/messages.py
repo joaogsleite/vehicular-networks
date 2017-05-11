@@ -24,8 +24,10 @@ def message_2():
     msg['type'] = 2
     msg['carID'] = getMyID()
     msg['location'] = getLocation()
-    msg['driverState'] = cipher(getDriverState())
+    msg['driverState'] = getDriverState()
     data = {}
+    ######
+    # SENSORES
     ######
     msg['data'] = cipher(json.dump(data))
     socket_send.sendto(json.dump(msg), ("FF02::1",port))
@@ -41,6 +43,7 @@ def message_3(car):
 
 def message_4(rsu, feedback, car):
 
+    feedback = "Pare imediatamente"
     msg = {}
     msg['type'] = 4
     msg['centerITS'] = getMyID()
@@ -48,7 +51,6 @@ def message_4(rsu, feedback, car):
     msg['feedback'] = feedback
     msg['carID'] = car
     socket_send.sendto(json.dump(msg), ("FF02::1",port))
-
 
 def message_5(cars):
 

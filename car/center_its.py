@@ -12,5 +12,5 @@ def received(message):
         msg = json.loads(data)
 
         if msg['type'] == 3:
-            rsu.append(msg)
-            print rsu
+            center.append(msg)
+            print center
