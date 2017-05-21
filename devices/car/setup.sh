@@ -1,8 +1,8 @@
 #!/bin/bash
 
+
 # Configuration
 car_number="0:0:0:1"
-
 
 
 # Ad-hoc setup
@@ -22,8 +22,18 @@ sudo ifdown wlan0
 sudo ifup wlan0
 
 
-
 # Install dependencies
 # =========================
-# sudo apt-get update
-# sudo apt-get install jstest-gtk
+sudo apt-get update
+sudo apt-get install jstest-gtk
+
+
+# Setup startup
+# =========================
+cp /etc/rc.local /etc/rc.local.old
+
+cat > /etc/rc.local <<- ENDRC
+
+python /home/pi/rv-project/devices/car/main.py &
+
+ENDRC
