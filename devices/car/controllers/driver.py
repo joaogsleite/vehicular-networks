@@ -2,14 +2,17 @@
 from devices.car.components.sensors import breathalyzer, fitbit, mindwave
 import devices.car.components.car.alerts as alert
 
+import devices.car.components.car.steering as steering
+
 
 def state():
     data = sensors()
     if data['alcohol'] < 0.2 \
-        and 50 < data['pulse'] < 100 \
-            and data['attention'] < 0.5:
-                alert.driver_not_well()
-                return 'danger'
+        or 50 < data['pulse'] < 100 \
+        or data['attention'] < 0.5 \
+        or steering.danger():
+            alert.driver_not_well()
+            return 'danger'
     else:
         return 'ok'
 

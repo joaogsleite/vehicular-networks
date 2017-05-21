@@ -6,10 +6,19 @@ throttle = 0
 brake = 0
 
 
+def danger():
+    # TODO: @tiago algoritmo return True se esta bebado
+    return False
+
+
 def get():
     # return last steering value read from steering wheel
     global steering
-    return steering
+    return {
+        'steering': steering,
+        'throttle': throttle,
+        'brake':    brake,
+    }
 
 
 def update():
