@@ -1,16 +1,19 @@
 
 from mindwavemobile.MindwaveDataPointReader import MindwaveDataPointReader
-mindwaveDataPointReader = MindwaveDataPointReader()
 
 
+mindwaveDataPointReader = None
 attention = 0
 
 
 def init():
+    global mindwaveDataPointReader
+    mindwaveDataPointReader = MindwaveDataPointReader()
     mindwaveDataPointReader.start()
 
 
 def update():
+    global mindwaveDataPointReader
     global attention
     dataPoint = mindwaveDataPointReader.readNextDataPoint()
     if dataPoint.__class__.__name__ == 'AttentionDataPoint':
