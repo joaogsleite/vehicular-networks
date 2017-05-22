@@ -38,7 +38,7 @@ def update():
     brake = int(line.split('2:')[1].split('3:')[0])
 
 
-def update(st, th, br):
+def set(st, th, br):
     # set value for demonstration
     global steering
     global throttle

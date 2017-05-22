@@ -15,7 +15,7 @@ def update():
     # TODO: @zio get value from fitbit
 
 
-def update(value):
+def set(value):
     # set value for demonstration
     global pulse
     pulse = value

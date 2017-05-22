@@ -9,7 +9,7 @@ def state():
     data = sensors()
     if data['alcohol'] < 0.2 \
         or 50 < data['pulse'] < 100 \
-        or data['attention'] < 0.5 \
+        or data['attention'] < 20 \
         or steering.danger():
             alert.driver_not_well()
             return 'danger'
@@ -23,5 +23,3 @@ def sensors():
         'pulse':        fitbit.get(),
         'attention':    mindwave.get(),
     }
-
-

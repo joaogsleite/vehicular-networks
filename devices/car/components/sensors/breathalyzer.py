@@ -15,7 +15,7 @@ def update():
     # TODO: @zio read value from breathalyzer
 
 
-def update(value):
+def set(value):
     # set value for demonstration
     global alcohol
     alcohol = value

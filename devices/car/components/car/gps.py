@@ -44,7 +44,7 @@ def update():
                 altitude = float(line.split(',')[9])
 
 
-def update(lat, lng, alt):
+def set(lat, lng, alt):
     # set value for demonstration
     global latitude
     global longitude
