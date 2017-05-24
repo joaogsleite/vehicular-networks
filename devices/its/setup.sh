@@ -25,8 +25,7 @@ sudo ifup wlan0
 # Install dependencies
 # =========================
 sudo apt-get update
-sudo apt-get install pi-bluetooth libbluetooth-dev python-bluetooth
-sudo apt-get install bluetooth bluez python-bluez
+
 
 # Setup startup
 # =========================

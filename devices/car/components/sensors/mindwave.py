@@ -1,6 +1,4 @@
-
 from mindwavemobile.MindwaveDataPointReader import MindwaveDataPointReader
-
 
 mindwaveDataPointReader = None
 attention = 0
