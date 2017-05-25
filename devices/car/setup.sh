@@ -25,10 +25,18 @@ sudo ifup wlan0
 # Install dependencies
 # =========================
 sudo apt-get update
-sudo apt-get install jstest-gtk #steering
-sudo apt-get install pi-bluetooth libbluetooth-dev python-bluetooth #bluetooth
-sudo apt-get install bluetooth bluez python-bluez #bluetooth
-sudo apt-get install build-essential python-dev python-smbus #breathlyzer
+
+#steering
+sudo apt-get install jstest-gtk
+
+#bluetooth
+sudo apt-get install pi-bluetooth libbluetooth-dev python-bluetooth
+sudo apt-get install bluetooth bluez python-bluez
+
+#breathlyzer
+sudo apt-get install build-essential python-dev python-smbus
+sudo pip install adafruit-mcp3008
+
 
 
 # Setup startup

@@ -1,42 +1,60 @@
 
 from datetime import datetime, timedelta
+import threading
 from time import sleep
 import RPi.GPIO as GPIO
 
 DELTA = timedelta(0, 1*60)
-GPIO.setmode(GPIO.BOARD)
+GPIO.setmode(GPIO.BCM)
 
 
 class Alert:
     def __init__(self, pin, name):
         self.pin = pin
         self.name = name
-        self.active = False
+        self.isActive = False
+        self.running = True
         self.last = datetime.now()
         GPIO.setup(self.pin, GPIO.OUT)
 
     def active(self):
         print 'Alert: ' + self.name
         self.last = datetime.now()
-        if not self.active:
-            self.active = True
+        if not self.isActive:
+            self.isActive = True
             GPIO.output(self.pin, True)
-            self.reset()
+            thread = threading.Thread(target=self.reset(), args=())
+            thread.start()
+
+    def shutdown(self):
+        self.running = False
 
     def reset(self):
-        while datetime.now() - self.last < DELTA:
+        while datetime.now() - self.last < DELTA and self.running:
             sleep(5)
         GPIO.output(self.pin, False)
-        self.active = False
+        self.isActive = False
 
 
-a2 = Alert(2, "driver is not well")
-a3 = Alert(3, "danger nearby")
+def init():
+    global a2
+    global a3
+    a2 = Alert(5, "driver is not well")
+    a3 = Alert(6, "danger nearby")
+
+
+def shutdown():
+    global a2
+    global a3
+    a2.shutdown()
+    a3.shutdown()
 
 
 def driver_not_well():
+    global a2
     a2.active()
 
 
 def nearby_danger():
+    global a3
     a3.active()

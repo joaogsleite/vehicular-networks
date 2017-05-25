@@ -2,7 +2,7 @@
 import threading
 from time import sleep
 
-from devices.car.components.car import gps, steering
+from devices.car.components.car import gps, steering, alerts
 from sensors import mindwave, fitbit, breathalyzer
 
 running = False
@@ -11,6 +11,7 @@ running = False
 def run_in_background():
 
     mindwave.init()
+    alerts.init()
 
     while running:
         print 'Updating values from car components'
@@ -22,6 +23,8 @@ def run_in_background():
         breathalyzer.update()
 
         sleep(1)
+
+    alerts.shutdown()
 
 
 def stop():
