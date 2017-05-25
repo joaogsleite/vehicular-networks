@@ -23,7 +23,7 @@ class Alert:
         if not self.isActive:
             self.isActive = True
             GPIO.output(self.pin, True)
-            thread = threading.Thread(target=self.reset(), args=())
+            thread = threading.Thread(target=self.reset, args=())
             thread.start()
 
     def shutdown(self):

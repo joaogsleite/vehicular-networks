@@ -9,7 +9,7 @@ def state():
     data = sensors()
     if data['alcohol'] < 0.2 \
         or 50 < data['pulse'] < 100 \
-        or data['attention'] < 20 \
+        or data['attention'] < 40 \
         or steering.danger():
             alert.driver_not_well()
             return 'danger'

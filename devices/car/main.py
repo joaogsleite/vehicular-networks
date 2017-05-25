@@ -40,11 +40,11 @@ if __name__ == "__main__":
 
     # decision block running
     running = True
-    thread1 = Thread(target=run_in_background(), args=())
+    thread1 = Thread(target=run_in_background, args=())
     thread1.start()
 
     # waiting messages
-    thread2 = Thread(target=waiting_msgs(), args=())
+    thread2 = Thread(target=waiting_msgs, args=())
     thread2.start()
 
 

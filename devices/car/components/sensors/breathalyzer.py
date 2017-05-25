@@ -27,10 +27,11 @@ def update():
     global alcohol
 
     value = mcp.read_adc(0)
-    value = value - 150
+    value = value - 190
     if value < 0:
         value = 0
-    value = 2.0 * value / 1024.0
+    value = 1.9 * value / 1024.0
+    value = round(value, 2)
 
     alcohol = value
 

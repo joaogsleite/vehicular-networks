@@ -48,3 +48,5 @@ cat > /etc/rc.local <<- ENDRC
 python /home/pi/rv-project/devices/car/main.py &
 
 ENDRC
+
+sudo hciconfig hci0 piscan

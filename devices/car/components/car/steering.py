@@ -1,4 +1,3 @@
-
 import os
 
 steering = 0
