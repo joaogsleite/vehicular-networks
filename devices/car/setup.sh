@@ -45,6 +45,10 @@ cp /etc/rc.local /etc/rc.local.old
 
 cat > /etc/rc.local <<- ENDRC
 
+exec 2> /tmp/rc.local.log       # send stderr from rc.local to a log file
+exec 1>&2                       # send stdout to the same log file
+set -x                          # tell sh to display commands before execution
+
 python /home/pi/rv-project/devices/car/main.py &
 
 ENDRC

@@ -21,9 +21,11 @@ def run_in_background():
 def waiting_msgs():
     while running:
         msg = communication.receive()
-        if msg['type'] == 2:
+        if msg == None:
+            print "Time exceeded"
+        elif msg['type'] == 2:
             cars.add(msg)
-        if msg['type'] == 5:
+        elif msg['type'] == 5:
             messages.rsu2car(msg['feedback'])
 
 
@@ -49,6 +51,3 @@ def signal_handler(signal, frame):
 
 signal.signal(signal.SIGINT, signal_handler)
 signal.pause()
-
-
-
