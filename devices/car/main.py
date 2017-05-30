@@ -2,6 +2,7 @@
 import signal
 from threading import Thread
 from time import sleep
+import sys
 
 import devices.car.controllers.nearby as nearby
 
@@ -42,7 +43,8 @@ def waiting_msgs():
 if __name__ == "__main__":
 
     # start car components (reading values)
-    components.start()
+    if sys.argv[0] == 'primary':
+        components.start()
 
     # setup messages module
     communication.setup()
