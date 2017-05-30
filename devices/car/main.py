@@ -49,6 +49,8 @@ if __name__ == "__main__":
     # start car components (reading values)
     if sys.argv[0] == 'primary':
         print 'PRIMARY CAR'
+        if sys.argv[1] is not None:
+            components.mock_gsp = True
         components.start()
     else:
         print 'SECONDARY CAR'
