@@ -9,6 +9,12 @@ car_number="0:0:0:1"
 # Install dependencies
 # =========================
 sudo apt-get update
+sudo apt-get install git
+sudo apt-get install vim
+sudo apt-get install python-pip
+
+# security
+sudo pip install pycrypto
 
 #steering
 sudo apt-get install jstest-gtk
@@ -33,7 +39,7 @@ exec 2> /tmp/rc.local.log       # send stderr from rc.local to a log file
 exec 1>&2                       # send stdout to the same log file
 set -x                          # tell sh to display commands before execution
 
-python /home/pi/rv-project/devices/car/main.py &
+PYTHONPATH="/home/pi/rv-project" python /home/pi/rv-project/devices/car/main.py &
 
 ENDRC
 

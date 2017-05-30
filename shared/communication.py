@@ -3,6 +3,7 @@ import socket
 import json
 
 ALL = "FF02::1"
+MYIP = "fd87:9ef2:9e19:34e1:0:0:0:1"
 PORT = 4173
 
 session = None
@@ -24,8 +25,9 @@ def send(msg):
 
 
 def my_id():
-    hostname = socket.gethostname()
-    return hostname.split("fd87:9ef2:9e19:34e1:", 2)[1]
+    #hostname = socket.gethostname()
+    #hostname.split("fd87:9ef2:9e19:34e1:", 2)[1]
+    return MYIP
 
 
 def receive():

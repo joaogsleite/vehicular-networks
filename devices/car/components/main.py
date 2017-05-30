@@ -13,12 +13,11 @@ def run_in_background():
     mindwave.init()
     alerts.init()
 
-    steering.update_in_background()
-
     while running:
         print 'Updating values from car components'
 
         gps.update()
+        steering.update()
         mindwave.update()
         fitbit.update()
         breathalyzer.update()
