@@ -18,6 +18,7 @@ thread2 = None
 def sending_msgs():
     global running
     while running:
+        print 'sending messages...'
         messages.car2car()
         messages.car2rsu()
         sleep(5)
@@ -28,13 +29,16 @@ def waiting_msgs():
     global running
     while running:
         try:
+            print 'waiting for messages...'
             msg = communication.receive()
+            print 'new message received: ' + msg
             if msg is not None:
                 print "Time exceeded"
             elif msg['type'] == 3:
                 nearby.add(msg)
             elif msg['type'] == 6:
                 for car in msg['cars']:
+                    print 'new nearby car'
                     nearby.add(car)
         except:
             print "Error receiving msg"
@@ -44,8 +48,10 @@ if __name__ == "__main__":
 
     # start car components (reading values)
     if sys.argv[0] == 'primary':
+        print 'PRIMARY CAR'
         components.start()
     else:
+        print 'SECONDARY CAR'
         alerts.init()
 
     # setup messages module
