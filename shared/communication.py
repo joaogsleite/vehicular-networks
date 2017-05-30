@@ -1,6 +1,7 @@
 
 import socket
 import json
+from time import time
 
 ALL = "FF02::1"
 MYIP = "fd87:9ef2:9e19:34e1:0:0:0:1"
@@ -32,14 +33,17 @@ def my_id():
 
 def receive():
     data, address = session.recvfrom(1024)
-    if((int(time.time()) - data['time']) > 60):
-        return None;
+    data = json.loads(data)
+    if int(time()) - int(data['time']) > 60:
+        return None
     else:
-        return json.loads(data)
+        return data
 
 
 def shutdown():
+    global session
     try:
         session.shutdown(socket.SHUT_RDWR)
-    except socket.error:
+    except socket.error as e:
+        print e
         print 'Error closing socket!'

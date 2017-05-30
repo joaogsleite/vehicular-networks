@@ -10,9 +10,12 @@ import shared.communication as communication
 import shared.messages as messages
 
 running = False
+thread1 = None
+thread2 = None
 
 
-def run_in_background():
+def sending_msgs():
+    global running
     while running:
         print 'decision block'
         messages.car2car()
@@ -21,15 +24,19 @@ def run_in_background():
 
 
 def waiting_msgs():
+    global running
     while running:
-        msg = communication.receive()
-        if msg == None:
-            print "Time exceeded"
-        elif msg['type'] == 3:
-            nearby.add(msg)
-        elif msg['type'] == 6:
-            for car in msg['cars']:
-                nearby.add(car)
+        try:
+            msg = communication.receive()
+            if msg is not None:
+                print "Time exceeded"
+            elif msg['type'] == 3:
+                nearby.add(msg)
+            elif msg['type'] == 6:
+                for car in msg['cars']:
+                    nearby.add(car)
+        except:
+            print "Error receiving msg"
 
 
 if __name__ == "__main__":
@@ -42,7 +49,7 @@ if __name__ == "__main__":
 
     # decision block running
     running = True
-    thread1 = Thread(target=run_in_background, args=())
+    thread1 = Thread(target=sending_msgs, args=())
     thread1.start()
 
     # waiting messages
@@ -51,9 +58,22 @@ if __name__ == "__main__":
 
 
 def signal_handler(signal, frame):
+    print "Closing program..."
+
     global running
+    global thread1
+    global thread2
+
     running = False
+
+    print "Stop sensors updates..."
+    components.stop()
+
+    print "Closing communication threads..."
+    thread1.join()
     communication.shutdown()
+    thread2.join()
+
 
 signal.signal(signal.SIGINT, signal_handler)
 signal.pause()

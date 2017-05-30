@@ -3,6 +3,7 @@ import devices.car.components.car.gps as location
 import devices.car.controllers.driver as driver
 import devices.rsu.cars as cars
 import time
+import json
 
 from communication import my_id, send
 from security.rsa import cipher
@@ -19,7 +20,8 @@ def car2car():
 
 
 def car2rsu():
-    sensors = cipher(driver.sensors())
+    sensors = json.dumps(driver.sensors())
+    sensors = cipher(sensors)
     send({
         'type':     2,
         'carID':    my_id(),

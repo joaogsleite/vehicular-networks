@@ -63,6 +63,12 @@ sudo ifup wlan0
 
 
 
-# Bluetooth discover
+# Project setup
 # =========================
+
+# bluetooth discover
 sudo hciconfig hci0 piscan
+
+# create keys for all hops
+cd rv-project
+python shared/security/rsa.py

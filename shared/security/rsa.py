@@ -3,9 +3,10 @@ from Crypto.PublicKey.RSA import importKey, generate
 from Crypto import Random
 from base64 import b64encode, b64decode
 
+PATH = "/home/pi/rv-project/shared/security"
 
 def cipher(message):
-    public_file = open("~/public.key", "r")
+    public_file = open(PATH+"/public.key", "r")
     public_key = importKey(public_file.read())
     public_file.close()
     encrypted = public_key.encrypt(message, 32)
@@ -14,7 +15,7 @@ def cipher(message):
 
 def decipher(message):
     message = b64decode(message)
-    private_file = open("~/private.key", "r")
+    private_file = open(PATH+"/private.key", "r")
     private_key = importKey(private_file.read())
     private_file.close()
     decrypted = private_key.decrypt(message)
@@ -28,11 +29,11 @@ def generate_key():
     priv_key = key.exportKey('DER')
     pub_key = key.publickey().exportKey('DER')
 
-    private_file = open("~/private.key", "w")
+    private_file = open(PATH+"/private.key", 'w+')
     private_file.write(priv_key)
     private_file.close()
 
-    public_file = open("~/public.key", "w")
+    public_file = open(PATH+"/public.key", 'w+')
     public_file.write(pub_key)
     public_file.close()
 
@@ -40,6 +41,6 @@ def generate_key():
 if __name__ == "__main__":
     generate_key()
 
-    msg = cipher("merda")
+    msg = cipher("example")
     print msg
     print decipher(msg)
