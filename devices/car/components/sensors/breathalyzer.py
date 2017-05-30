@@ -24,6 +24,7 @@ def get():
 
 
 def update():
+    print 'updating breathalyzer data'
     # read real value from breathalyzer
     global alcohol
     global buffer_index
@@ -40,11 +41,13 @@ def update():
     if buffer_index == 20:
         buffer_index = 1
 
+
 def danger():
     global alcohol
     med = sum(alcohol) / 20
-    return med > 0.2
-
+    d = med > 0.2
+    print 'breathalyzer danger: '+d
+    return d
 
 def set(value):
     # set value for demonstration

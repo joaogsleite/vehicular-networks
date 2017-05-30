@@ -11,7 +11,8 @@ def check(new):
     global nearby
     for i, car in enumerate(nearby):
         if datetime.now() - car['date'] < DELTA and car['carID'] == new['carID']:
-                nearby.pop(i)
+            print 'removing nearby car: ' + nearby[i]
+            nearby.pop(i)
 
 
 def add(car):
@@ -22,6 +23,7 @@ def add(car):
     if car['state'] == 'danger':
         nearby_danger()
 
+    print 'adding new nearby car'
     nearby.append({
         'carID'     : car['carID'],
         'location'  : car['location'],

@@ -7,14 +7,18 @@ import devices.car.components.car.steering as steering
 
 def state():
     if breathalyzer.danger() or fitbit.danger() or mindwave.danger() or steering.danger():
+        print 'driver state: danger'
         return 'danger'
     else:
+        print 'driver state: ok'
         return 'ok'
 
 
 def sensors():
-    return {
+    data = {
         'alcohol':      breathalyzer.get(),
         'pulse':        fitbit.get(),
         'attention':    mindwave.get(),
     }
+    print 'sensors data: '+data
+    return data

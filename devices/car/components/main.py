@@ -16,27 +16,32 @@ def run_in_background():
     global pre_test
 
     try:
+        print 'starting mindwave...'
         mindwave.init()
     except:
         print "Error init mindwave"
 
     try:
+        print 'starting alert leds...'
         alerts.init()
     except:
         print "Error init alerts"
 
     try:
+        print 'starting breathalyzer...'
         breathalyzer.init()
     except:
         print "Error init breathalyzer"
 
     while pre_test:
+        print 'blow test stated!'
         alerts.blow(True)
         for i in range(20):
             print i + 1
             breathalyzer.update()
 
         if breathalyzer.danger() is False:
+            print 'blow test complete!'
             alerts.blow(False)
             pre_test = False
 
@@ -77,6 +82,7 @@ def stop():
     global running
     global thread
     global pre_test
+    print 'stoping sensors reading data...'
     running = False
     pre_test = False
     thread.join()
@@ -86,5 +92,6 @@ def start():
     global thread
     global running
     running = True
+    print 'starting sensors background thread...'
     thread = threading.Thread(target=run_in_background, args=())
     thread.start()

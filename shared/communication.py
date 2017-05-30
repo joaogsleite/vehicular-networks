@@ -12,11 +12,13 @@ session = None
 
 def setup():
     global session
+    print "creating socket..."
     session = socket.socket(socket.AF_INET6, socket.SOCK_DGRAM)
 
 
 def send(msg):
     msg = json.dumps(msg)
+    print msg
     try:
         session.sendto(msg, (ALL, PORT))
     except socket.error, socket.timeout:
@@ -33,6 +35,7 @@ def my_id():
 
 def receive():
     data, address = session.recvfrom(1024)
+    print 'received message: '+data
     data = json.loads(data)
     if int(time()) - int(data['time']) > 60:
         return None
@@ -42,6 +45,7 @@ def receive():
 
 def shutdown():
     global session
+    print 'closing socket...'
     try:
         session.shutdown(socket.SHUT_RDWR)
     except socket.error:

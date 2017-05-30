@@ -24,6 +24,7 @@ def sending_msgs():
 
 
 def waiting_msgs():
+    print
     global running
     while running:
         try:

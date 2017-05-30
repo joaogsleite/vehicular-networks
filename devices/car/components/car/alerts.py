@@ -50,6 +50,7 @@ def shutdown():
     global a1
     global a2
     global a3
+    print 'shutdown leds...'
     a1.shutdown()
     a2.shutdown()
     a3.shutdown()
