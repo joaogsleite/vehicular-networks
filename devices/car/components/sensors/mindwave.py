@@ -1,7 +1,8 @@
 from mindwavemobile.MindwaveDataPointReader import MindwaveDataPointReader
 
 mindwaveDataPointReader = None
-attention = 50
+attention = []
+buffer_index = 0
 
 
 def init():
@@ -13,12 +14,15 @@ def init():
 def update():
     global mindwaveDataPointReader
     global attention
+    global buffer_index
     dataPoint = mindwaveDataPointReader.readNextDataPoint()
     if dataPoint.__class__.__name__ == 'AttentionDataPoint':
         value = str(dataPoint)
         number = value.split('Attention Level: ')[1]
-        attention = int(number)
-
+        attention[buffer_index] = int(number)
+        buffer_index += 1
+        if buffer_index == 20:
+            buffer_index = 0
 
 def get():
     # return last alcohol value read from mindwave
@@ -27,7 +31,9 @@ def get():
 
 
 def danger():
-    return attention < 40
+    global attention
+    med = sum(attention) / 20
+    return med < 20
 
 
 def set(value):
