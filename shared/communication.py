@@ -44,6 +44,5 @@ def shutdown():
     global session
     try:
         session.shutdown(socket.SHUT_RDWR)
-    except socket.error as e:
-        print e
-        print 'Error closing socket!'
+    except socket.error:
+        print 'Close socket'

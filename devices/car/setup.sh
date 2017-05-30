@@ -47,9 +47,9 @@ ENDRC
 
 # Ad-hoc setup
 # =========================
-cp /etc/network/interfaces /etc/network/interfaces.old
+sudo cp /etc/network/interfaces /etc/network/interfaces.old
 
-cat > /etc/network/interfaces <<- ENDINT
+sudo cat > /etc/network/interfaces <<- ENDINT
 auto wlan0
 iface wlan0 inet6 static
      address fd87:9ef2:9e19:34e1:$car_number
