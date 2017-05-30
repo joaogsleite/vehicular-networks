@@ -9,22 +9,24 @@ car_number="0:0:0:1"
 # Install dependencies
 # =========================
 sudo apt-get update
-sudo apt-get install git
-sudo apt-get install vim
-sudo apt-get install python-pip
+sudo apt-get install -y git
+sudo apt-get install -y vim
+sudo apt-get install -y python-pip
 
 # security
+sudo apt-get install -y build-essential python-dev
 sudo pip install pycrypto
 
+
 #steering
-sudo apt-get install jstest-gtk
+sudo apt-get install -y jstest-gtk
 
 #bluetooth
-sudo apt-get install pi-bluetooth libbluetooth-dev python-bluetooth
-sudo apt-get install bluetooth bluez python-bluez
+sudo apt-get install -y pi-bluetooth libbluetooth-dev python-bluetooth
+sudo apt-get install -y bluetooth bluez python-bluez
 
 #breathlyzer
-sudo apt-get install build-essential python-dev python-smbus
+sudo apt-get install -y python-smbus
 sudo pip install adafruit-mcp3008
 
 
@@ -47,9 +49,9 @@ ENDRC
 
 # Ad-hoc setup
 # =========================
-sudo cp /etc/network/interfaces /etc/network/interfaces.old
+cp /etc/network/interfaces /etc/network/interfaces.old
 
-sudo cat > /etc/network/interfaces <<- ENDINT
+cat > /etc/network/interfaces <<- ENDINT
 auto wlan0
 iface wlan0 inet6 static
      address fd87:9ef2:9e19:34e1:$car_number
