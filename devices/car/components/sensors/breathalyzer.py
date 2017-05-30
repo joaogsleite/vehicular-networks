@@ -36,6 +36,10 @@ def update():
     alcohol = value
 
 
+def danger():
+    return alcohol > 0.2
+
+
 def set(value):
     # set value for demonstration
     global alcohol

@@ -1,7 +1,7 @@
 from mindwavemobile.MindwaveDataPointReader import MindwaveDataPointReader
 
 mindwaveDataPointReader = None
-attention = 0
+attention = 50
 
 
 def init():
@@ -24,6 +24,10 @@ def get():
     # return last alcohol value read from mindwave
     global attention
     return attention
+
+
+def danger():
+    return attention < 40
 
 
 def set(value):

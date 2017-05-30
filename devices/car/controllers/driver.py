@@ -6,13 +6,8 @@ import devices.car.components.car.steering as steering
 
 
 def state():
-    data = sensors()
-    if data['alcohol'] < 0.2 \
-        or 50 < data['pulse'] < 100 \
-        or data['attention'] < 40 \
-        or steering.danger():
-            alert.driver_not_well()
-            return 'danger'
+    if breathalyzer.danger() or fitbit.danger() or mindwave.danger() or steering.danger():
+        return 'danger'
     else:
         return 'ok'
 

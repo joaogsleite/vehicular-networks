@@ -15,6 +15,10 @@ def update():
     # TODO: @zio get value from fitbit
 
 
+def danger():
+    return False
+
+
 def set(value):
     # set value for demonstration
     global pulse
