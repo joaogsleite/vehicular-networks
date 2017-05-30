@@ -5,7 +5,7 @@ from time import sleep
 import sys
 
 import devices.car.controllers.nearby as nearby
-
+import devices.car.components.car.alerts as alerts
 import devices.car.components.main as components
 import shared.communication as communication
 import shared.messages as messages
@@ -45,6 +45,8 @@ if __name__ == "__main__":
     # start car components (reading values)
     if sys.argv[0] == 'primary':
         components.start()
+    else:
+        alerts.init()
 
     # setup messages module
     communication.setup()
