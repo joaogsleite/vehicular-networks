@@ -1,7 +1,7 @@
 from mindwavemobile.MindwaveDataPointReader import MindwaveDataPointReader
 
 mindwaveDataPointReader = None
-attention = []
+attention = [50]
 buffer_index = 1
 
 
@@ -27,14 +27,14 @@ def update():
 def get():
     # return last alcohol value read from mindwave
     global attention
-    return attention
+    return attention[-1]
 
 
 def danger():
     global attention
     med = sum(attention) / 20
     d = med < 20
-    print 'mindwave danger: '+d
+    print 'mindwave danger: '+str(d)
     return d
 
 

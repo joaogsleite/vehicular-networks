@@ -85,7 +85,10 @@ def stop():
     print 'stoping sensors reading data...'
     running = False
     pre_test = False
-    thread.join()
+    try:
+        thread.join()
+    except:
+        print ''
 
 
 def start():
