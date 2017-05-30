@@ -23,9 +23,11 @@ def run_in_background():
 def waiting_msgs():
     while running:
         msg = communication.receive()
-        if msg['type'] == 3:
+        if msg == None:
+            print "Time exceeded"
+        elif msg['type'] == 3:
             nearby.add(msg)
-        if msg['type'] == 6:
+        elif msg['type'] == 6:
             for car in msg['cars']:
                 nearby.add(car)
 
@@ -55,9 +57,3 @@ def signal_handler(signal, frame):
 
 signal.signal(signal.SIGINT, signal_handler)
 signal.pause()
-
-
-
-
-
-

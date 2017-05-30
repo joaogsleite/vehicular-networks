@@ -13,7 +13,9 @@ FEEDBACK = 'Para bebado!'
 def waiting_msgs():
     while running:
         msg = communication.receive()
-        if msg['type'] == 4:
+        if msg == None:
+            print "Time exceeded"
+        elif msg['type'] == 4:
             messages.its2rsu(msg['carID'], FEEDBACK)
         sleep(5)
 
@@ -35,9 +37,3 @@ def signal_handler(signal, frame):
 
 signal.signal(signal.SIGINT, signal_handler)
 signal.pause()
-
-
-
-
-
-

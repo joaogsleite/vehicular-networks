@@ -30,7 +30,10 @@ def my_id():
 
 def receive():
     data, address = session.recvfrom(1024)
-    return json.loads(data)
+    if((int(time.time()) - data['time']) > 60):
+        return None;
+    else:
+        return json.loads(data)
 
 
 def shutdown():
