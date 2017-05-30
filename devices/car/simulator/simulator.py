@@ -3,6 +3,7 @@ import SocketServer
 import json
 
 from devices.car.components.car.steering import get
+from devices.car.main import pre_test, running
 
 
 class Handler(SimpleHTTPServer.SimpleHTTPRequestHandler):
@@ -11,10 +12,12 @@ class Handler(SimpleHTTPServer.SimpleHTTPRequestHandler):
         print self.path
 
         if self.path == '/controllers':
-            direction = get()
+            info_car = get()
+            info_car['pre_test'] = pre_test
+            info_car['running'] = running
             self.send_response(200)
             self.end_headers()
-            self.wfile.write(json.dumps(direction, ensure_ascii=False))
+            self.wfile.write(json.dumps(info_car, ensure_ascii=False))
 
         else:
             f = open('.' + self.path)

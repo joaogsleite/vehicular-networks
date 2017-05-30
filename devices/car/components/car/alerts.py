@@ -37,15 +37,20 @@ class Alert:
 
 
 def init():
+    global a1
     global a2
     global a3
+    a1 = Alert(7, "blow")
     a2 = Alert(5, "driver is not well")
     a3 = Alert(6, "danger nearby")
 
 
+
 def shutdown():
+    global a1
     global a2
     global a3
+    a1.shutdown()
     a2.shutdown()
     a3.shutdown()
 
@@ -58,3 +63,11 @@ def driver_not_well():
 def nearby_danger():
     global a3
     a3.active()
+
+
+def blow(ok):
+    global a1
+    if ok:
+        a1.active()
+    else:
+        a1.shutdown()
