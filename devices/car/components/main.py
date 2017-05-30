@@ -8,6 +8,7 @@ from sensors import mindwave, fitbit, breathalyzer
 running = False
 thread = None
 pre_test = True
+mock_gsp = False
 
 
 def run_in_background():
@@ -49,7 +50,10 @@ def run_in_background():
         print 'Updating values from car components'
 
         try:
-            gps.update()
+            if mock_gsp:
+                gps.read()
+            else:
+                gps.update()
         except:
             print "No GPS"
 
