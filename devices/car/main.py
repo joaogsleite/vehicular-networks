@@ -17,7 +17,6 @@ thread2 = None
 def sending_msgs():
     global running
     while running:
-        print 'decision block'
         messages.car2car()
         messages.car2rsu()
         sleep(5)
@@ -65,6 +64,7 @@ def signal_handler(signal, frame):
     global thread2
 
     running = False
+
 
     print "Stop sensors updates..."
     components.stop()

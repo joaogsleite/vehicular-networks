@@ -2,7 +2,7 @@ from mindwavemobile.MindwaveDataPointReader import MindwaveDataPointReader
 
 mindwaveDataPointReader = None
 attention = []
-buffer_index = 0
+buffer_index = 1
 
 
 def init():
@@ -22,7 +22,7 @@ def update():
         attention[buffer_index] = int(number)
         buffer_index += 1
         if buffer_index == 20:
-            buffer_index = 0
+            buffer_index = 1
 
 def get():
     # return last alcohol value read from mindwave

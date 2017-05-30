@@ -9,7 +9,7 @@ CS   = 25
 
 mcp = None
 alcohol = []
-buffer_index = 0
+buffer_index = 1
 
 
 def init():
@@ -38,7 +38,7 @@ def update():
     alcohol[buffer_index] = value
     buffer_index += 1
     if buffer_index == 20:
-        buffer_index = 0
+        buffer_index = 1
 
 def danger():
     global alcohol

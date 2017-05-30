@@ -76,7 +76,9 @@ def run_in_background():
 def stop():
     global running
     global thread
+    global pre_test
     running = False
+    pre_test = False
     thread.join()
 
 
