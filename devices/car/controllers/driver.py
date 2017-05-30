@@ -20,5 +20,5 @@ def sensors():
         'pulse':        fitbit.get(),
         'attention':    mindwave.get(),
     }
-    print 'sensors data: '+data
+    print 'sensors data: '+str(data)
     return data
