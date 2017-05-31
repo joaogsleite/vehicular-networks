@@ -3,9 +3,9 @@ import signal
 from threading import Thread
 from time import sleep
 
-from shared.security.rsa import decipher
+#from shared.security.rsa import decipher
 import shared.communication as communication
-import shared.messages as messages
+#import shared.messages as messages
 
 running = False
 FEEDBACK = 'Para bebado!'
@@ -14,6 +14,8 @@ FEEDBACK = 'Para bebado!'
 def waiting_msgs():
     while running:
         msg = communication.receive()
+        print "Received"
+        '''
         if msg is None:
             print "Time exceeded"
         elif msg['type'] == 4:
@@ -21,8 +23,8 @@ def waiting_msgs():
             print "Message received from car "+msg['carID']
             print "Sensors data: "+sensors
             messages.its2rsu(msg['carID'], FEEDBACK)
+        '''
         sleep(5)
-
 
 if __name__ == "__main__":
 

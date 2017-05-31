@@ -1,4 +1,3 @@
-
 import Adafruit_MCP3008
 
 # SPI Configuration

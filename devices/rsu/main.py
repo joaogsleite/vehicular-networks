@@ -14,7 +14,7 @@ running = False
 def run_in_background():
     while running:
         print 'decision block'
-        messages.rsu2cars()
+        messages.rsu2its("1", "ok", "ok")
         sleep(5)
 
 
