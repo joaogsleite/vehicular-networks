@@ -1,21 +1,19 @@
-
 import signal
+import sys
+
+import cars
 from threading import Thread
 from time import sleep
 
-import cars
-
 import shared.communication as communication
-import shared.messages as messages
+import messagesRSU as messages
 
 running = False
-
+MYIP = str(sys.argv[1])
 
 def run_in_background():
     while running:
-        print 'decision block'
-        messages.rsu2its("1", "ok", "ok")
-        sleep(5)
+        messages.rsu2cars(myip)
 
 
 def waiting_msgs():
@@ -25,8 +23,10 @@ def waiting_msgs():
             print "Time exceeded"
         elif msg['type'] == 2:
             cars.add(msg)
+            if msg['state'] == 'danger':
+                messages.rsu2its(msg['carID'], msg['state'], msg['sensors'], MYIP)
         elif msg['type'] == 5:
-            messages.rsu2car(msg['feedback'])
+            messages.rsu2car(msg['feedback'], msg['carID'], MYIP)
 
 
 if __name__ == "__main__":
@@ -36,11 +36,12 @@ if __name__ == "__main__":
 
     # decision block running
     running = True
-    thread1 = Thread(target=run_in_background(), args=())
-    thread1.start()
 
     # waiting messages
-    thread2 = Thread(target=waiting_msgs(), args=())
+    thread1 = Thread(target=waiting_msgs(), args=())
+    thread1.start()
+
+    thread2 = Thread(target=run_in_background(), args=())
     thread2.start()
 
 

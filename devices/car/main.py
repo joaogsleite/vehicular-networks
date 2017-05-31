@@ -7,24 +7,24 @@ import devices.car.controllers.nearby as nearby
 import devices.car.components.car.alerts as alerts
 import devices.car.components.main as components
 import shared.communication as communication
-import shared.messages as messages
+import messagesCAR as messages
 
 running = False
 thread1 = None
 thread2 = None
+MYIP = sys.argv[1]
 
 
 def sending_msgs():
     global running
     while running:
         print 'sending messages...'
-        messages.car2car()
-        messages.car2rsu()
+        messages.car2car(MYIP)
+        messages.car2rsu(MYIP)
         sleep(5)
 
 
 def waiting_msgs():
-    print
     global running
     while running:
         try:
@@ -46,9 +46,9 @@ def waiting_msgs():
 if __name__ == "__main__":
 
     # start car components (reading values)
-    if sys.argv[0] == 'primary':
+    if sys.argv[2] == 'primary':
         print 'PRIMARY CAR'
-        if sys.argv[1] is not None:
+        if sys.argv[3] is not None:
             components.mock_gsp = True
         components.start()
     else:

@@ -1,9 +1,9 @@
-
+import os
 from Crypto.PublicKey.RSA import importKey, generate
 from Crypto import Random
 from base64 import b64encode, b64decode
 
-PATH = "/home/pi/rv-project/shared/security"
+PATH = os.path.dirname(__file__)
 
 def cipher(message):
     public_file = open(PATH+"/public.key", "r")

@@ -13,7 +13,7 @@ cat > /etc/network/interfaces <<- ENDINT
 
 auto eth0
 iface eth0 inet6 static
-    address fd87:9ef2:9e19:34e2:0:0:0:1
+    address fc02::$rsu_number
     netmask 64
 ENDINT
 sudo ifdown eth0
@@ -48,4 +48,4 @@ sudo ifup eth0
 #set -x                          # tell sh to display commands before execution
 PYTHONPATH="/home/pi/rv-project" python /home/pi/rv-project/devices/rsu/main.py
 
-ENDRC
+#ENDRC
