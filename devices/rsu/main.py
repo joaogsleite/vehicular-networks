@@ -8,7 +8,7 @@ import shared.communication as communication
 import messagesRSU as messages
 
 running = False
-MYIP = "fc02::1"
+MYIP = "fc01::101"
 thread1 = None
 thread2 = None
 
@@ -18,7 +18,7 @@ def run_in_background():
     global MYIP
 
     while running:
-        messages.rsu2cars(myip)
+        messages.rsu2cars(MYIP)
         sleep(5)
 
 
@@ -26,7 +26,7 @@ def waiting_msgs():
     global running
 
     while running:
-        print
+        print ''
         msg = communication.receive()
         if msg is None:
             print "Time exceeded"
@@ -36,6 +36,7 @@ def waiting_msgs():
                 messages.rsu2its(msg['carID'], msg['state'], msg['sensors'], MYIP)
         elif msg['type'] == 5:
             messages.rsu2car(msg['feedback'], msg['carID'], MYIP)
+        sleep(0.5)
 
 
 if __name__ == "__main__":

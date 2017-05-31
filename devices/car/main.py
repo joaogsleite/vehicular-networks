@@ -91,6 +91,7 @@ if __name__ == "__main__":
         components.start()
     else:
         print 'SECONDARY CAR'
+        components.pre_test = False
         print ">>> no sensors"
         alerts.init()
 

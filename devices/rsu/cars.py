@@ -1,7 +1,5 @@
 
-from datetime import datetime, timedelta
-
-DELTA = timedelta(0, 1*60)
+import time
 
 cars = []
 
@@ -9,7 +7,7 @@ cars = []
 def list():
     global cars
     for i, car in enumerate(cars):
-        if datetime.now() - car['date'] < DELTA:
+        if int(time.time()) - int(car['date']) > 60:
             cars.pop(i)
 
     return cars
@@ -20,5 +18,5 @@ def add(car):
     cars.append({
         'carID'     : car['carID'],
         'location'  : car['location'],
-        'date'      : datetime.now(),
+        'date'      : int(time.time()),
     })

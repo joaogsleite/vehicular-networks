@@ -1,39 +1,33 @@
 #!/bin/bash
 
 # Configuration
-its_number="100"
+its_number="1001"
 
-# Ad-hoc setup
+
+# NTP Server
+sudo chmod 777 /etc/ntp-restrict.conf
+sudo cp /etc/ntp-restrict.conf /etc/ntp-restrict.conf.old
+cat > /etc/ntp-restrict.conf <<- ENDCONF
+
+# Access restrictions documented in ntp.conf(5) and
+# http://support.ntp.org/bin/view/Support/AccessRestrictions
+# Limit network machines to time queries only
+
+restrict default kod nomodify notrap nopeer noquery
+restrict -6 default kod nomodify notrap nopeer noquery
+
+# localhost is unrestricted
+restrict 127.0.0.1
+restrict -6 ::1
+
+# RV
+restrict -6 fc02::/64
+
+includefile /private/etc/ntp.conf
+includefile /private/etc/ntp_opendirectory.conf
+
+ENDCONF
+
+# Run program
 # =========================
-#sudo cp /etc/network/interfaces /etc/network/interfaces.old
-sudo chmod 777 /etc/network/interfaces
-cat > /etc/network/interfaces <<- ENDINT
-
-auto eth0
-iface eth0 inet6 static
-    address fc02::$its_number
-    netmask 64
-ENDINT
-
-#sudo ifdown wlan0
-#sudo ifup wlan0
-sudo ifdown eth0
-sudo ifup eth0
-
-# Install dependencies
-# =========================
-#sudo apt-get update
-
-# Setup startup
-# =========================
-sudo cp /etc/rc.local /etc/rc.local.old
-
-exec 2> /tmp/rc.local.log       # send stderr from rc.local to a log file
-exec 1>&2                       # send stdout to the same log file
-set -x                          # tell sh to display commands before execution
-
-cat > /etc/rc.local <<- ENDRC
-
 python /home/pi/rv-project/devices/its/main.py &
-
-#ENDRC
