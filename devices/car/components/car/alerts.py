@@ -18,7 +18,7 @@ class Alert:
         GPIO.setup(self.pin, GPIO.OUT)
 
     def active(self):
-        print 'Alert: ' + self.name
+        print '>>> Led: ' + self.name
         self.last = datetime.now()
         if not self.isActive:
             self.isActive = True

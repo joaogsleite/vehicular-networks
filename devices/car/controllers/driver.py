@@ -4,12 +4,18 @@ import devices.car.components.car.alerts as alert
 
 import devices.car.components.car.steering as steering
 
+import devices.car.simulator.main as simulator
+
 
 def state():
     if breathalyzer.danger() or fitbit.danger() or mindwave.danger() or steering.danger():
         print 'driver state: danger'
+        simulator.pre_test = True
+        alert.driver_not_well()
+
         return 'danger'
     else:
+        simulator.pre_test = False
         print 'driver state: ok'
         return 'ok'
 

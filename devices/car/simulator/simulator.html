@@ -22,9 +22,9 @@ html,body { background: #f5f5f5; }
 	background: #f0f0f0;
 }
 #panel div {
-	width:150px;
+	width:212px;
 	float: left;
-	margin:10px 0 0 113px;
+	margin:10px 0 0 0;
 	text-align: center;
 	padding-top: 15px;
 	height: 35px;
@@ -58,27 +58,67 @@ html,body { background: #f5f5f5; }
 	<img src="car.png" id="car"></div>
 </div>
 <div id="panel">
-	<div>  </div>
-	<div> Acceleration: <span id="acceleration">0</span> </div>
+	<div id="engine"> Engine: <span>OFF</span></div>
+	<div id="acceleration"> Car <span>stopped<span> </div>
+	<div id="danger"> </div>
 </div>
 
 <script type="text/javascript">
 	var car = document.getElementById("car");
 	var acceleration = document.getElementById("acceleration");
+	var engine = document.getElementById("engine");
+	var danger = document.getElementById("danger");
+
+	var already_on = false;
+	var countdown = false;
+
+	var timer = 60;
 
 	setInterval(function(){
+
 		var xmlHttp = new XMLHttpRequest();
   		xmlHttp.open( "GET", "/controllers", false ); // false for synchronous request
   		xmlHttp.send( null );
 		var data = JSON.parse(xmlHttp.responseText);
 		
-		direction = data.steering/320;
-		car.style.marginLeft = direction+"px";
 		
 		var throttle = (-data.throttle+32767)/65534;
-		acceleration.innerHTML = Math.floor(throttle*140);
+		//acceleration.innerHTML = Math.floor(throttle*140);
+
+		if(throttle>0.1 && (!data.pre_test) || (countdown && timer>0)){
+			acceleration.getElementsByTagName('span')[0].innerHTML = "running"
+			direction = data.steering/320;
+			car.style.marginLeft = direction+"px";
+		}
+		if(throttle<0.1){
+			acceleration.getElementsByTagName('span')[0].innerHTML = "stopped"
+		}
+		if(data.pre_test && !already_on){
+			engine.getElementsByTagName('span')[0].innerHTML = "OFF"
+		} 
+		if(!data.pre_test && !already_on){
+			already_on = true;
+			engine.style.backgroundColor = "#0f0"
+			engine.getElementsByTagName('span')[0].innerHTML = "ON"
+		}
+		
+		if(data.pre_test && already_on && !countdown){
+			countdown = true
+		}
+		if(countdown && timer>0){
+			timer --;
+			danger.style.backgroundColor = "#f00";
+			danger.innerHTML = "Countdown to stop car: "+timer;
+		}
+		if(countdown && timer==0){
+			engine.getElementsByTagName('span')[0].innerHTML = "OFF"
+			acceleration.getElementsByTagName('span')[0].innerHTML = "stopped"
+			engine.style.backgroundColor = "#f00";
+		}
 
 	},500)
+
+
 
 </script>
 </body>

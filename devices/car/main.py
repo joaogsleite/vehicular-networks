@@ -11,7 +11,6 @@ import shared.communication as communication
 import messagesCAR as messages
 
 running = False
-pre_test = False
 thread1 = None
 thread2 = None
 MYIP = None
@@ -20,31 +19,31 @@ MYIP = None
 def sending_msgs():
     global running
     global MYIP
+
     while running:
-        print 'sending messages...'
-        messages.car2car(MYIP)
-        messages.car2rsu(MYIP)
-        sleep(5)
+        while running and not components.pre_test:
+            print 'sending messages...'
+            messages.car2car(MYIP)
+            messages.car2rsu(MYIP)
+            sleep(5)
+        sleep(1)
 
 
 def waiting_msgs():
     global running
-    global pre_test
-
-    while pre_test:
-        alerts.blow(True)
-        for i in range(20):
-            breathalyzer.update()
-
-        if not breathalyzer.danger():
-            pre_test = False
-            alerts.blow(False)
 
     while running:
         try:
             print 'waiting for messages...'
             msg = communication.receive()
-            print 'new message received: ' + msg
+            try:
+                if msg['carID'] == MYIP:
+                    continue
+            except:
+                print ''
+
+            print 'new message received: ' + str(msg)
+
             if msg is not None:
                 print "Time exceeded"
             elif msg['type'] == 3:
@@ -53,37 +52,9 @@ def waiting_msgs():
                 for car in msg['cars']:
                     print 'new nearby car'
                     nearby.add(car)
-        except:
+        except Exception,e:
             print "Error receiving msg"
-
-
-if __name__ == "__main__":
-
-    MYIP = sys.argv[1]
-    # start car components (reading values)
-    if sys.argv[2] == 'primary':
-        print 'PRIMARY CAR'
-        if sys.argv[3] is not None:
-            components.mock_gsp = True
-        pre_test = True
-        components.start()
-    else:
-        print 'SECONDARY CAR'
-        pre_test = False
-        alerts.init()
-
-    # setup messages module
-    communication.setup()
-
-
-    # decision block running
-    running = True
-    thread1 = Thread(target=sending_msgs, args=())
-    thread1.start()
-
-    # waiting messages
-    thread2 = Thread(target=waiting_msgs, args=())
-    thread2.start()
+            print e
 
 
 def signal_handler(signal, frame):
@@ -104,5 +75,38 @@ def signal_handler(signal, frame):
     thread2.join()
 
 
-signal.signal(signal.SIGINT, signal_handler)
-signal.pause()
+if __name__ == "__main__":
+
+    MYIP = sys.argv[1]
+    # start car components (reading values)
+    if sys.argv[2] == 'primary':
+        print 'PRIMARY CAR'
+        try:
+            if sys.argv[3] is not None:
+                components.mock_gsp = True
+                print ">>> gps simulation active"
+        except:
+            components.mock_gsp = False
+            print ">>> no gps simulation"
+        components.start()
+    else:
+        print 'SECONDARY CAR'
+        print ">>> no sensors"
+        alerts.init()
+
+    # setup messages module
+    print "binding sockets..."
+    communication.setup()
+    print "complete"
+
+    # decision block running
+    running = True
+    thread1 = Thread(target=sending_msgs, args=())
+    thread1.start()
+
+    # waiting messages
+    thread2 = Thread(target=waiting_msgs, args=())
+    thread2.start()
+
+    signal.signal(signal.SIGINT, signal_handler)
+    signal.pause()
