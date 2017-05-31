@@ -17,7 +17,6 @@ sudo apt-get install -y python-pip
 sudo apt-get install -y build-essential python-dev
 sudo pip install pycrypto
 
-
 #steering
 sudo apt-get install -y jstest-gtk
 
@@ -41,7 +40,7 @@ exec 2> /tmp/rc.local.log       # send stderr from rc.local to a log file
 exec 1>&2                       # send stdout to the same log file
 set -x                          # tell sh to display commands before execution
 
-PYTHONPATH="/home/pi/rv-project" python /home/pi/rv-project/devices/car/main.py &
+PYTHONPATH="/home/pi/rv-project" python /home/pi/rv-project/devices/car/main.py primary &
 
 ENDRC
 
@@ -54,7 +53,7 @@ cp /etc/network/interfaces /etc/network/interfaces.old
 cat > /etc/network/interfaces <<- ENDINT
 auto wlan0
 iface wlan0 inet6 static
-     address fd87:9ef2:9e19:34e1:$car_number
+     address fc01::$car_number
      netmask 64
      wireless-channel 6
      wireless-essid VehicularNet

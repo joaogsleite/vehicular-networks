@@ -8,6 +8,7 @@ import devices.car.components.car.alerts as alerts
 import devices.car.components.main as components
 import shared.communication as communication
 import shared.messages as messages
+import devices.car.simulator.simulator
 
 running = False
 thread1 = None
@@ -51,6 +52,7 @@ if __name__ == "__main__":
         if sys.argv[1] is not None:
             components.mock_gsp = True
         components.start()
+        simulator.start()
     else:
         print 'SECONDARY CAR'
         alerts.init()
