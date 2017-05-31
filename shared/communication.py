@@ -3,13 +3,17 @@ import json
 from time import time
 from threading import Thread
 
+import struct
 
 PORT = 4173
 
 session = None
 
-def binding():
-    session.bind(('', PORT))
+
+#def binding():
+ #   session.setsockopt(socket.IPPROTO_IPV6, socket.IPV6_JOIN_GROUP, 'ff02::1%wlan0')
+  #  session.bind(('', PORT))
+
 
 def setup():
     global session
@@ -21,8 +25,10 @@ def server_setup():
     global session
     print "creating socket..."
     session = socket.socket(socket.AF_INET6, socket.SOCK_DGRAM)
-    thread = Thread(target=binding, args=())
-    thread.start()
+    #thread = Thread(target=binding, args=())
+    #thread.start()
+    session.bind(('', PORT))
+    session.setsockopt(socket.IPPROTO_IPV6, socket.IPV6_JOIN_GROUP, socket.inet_pton(socket.AF_INET6, "ff02::1")+'\0'*4)
 
 
 def send(msg, ip):

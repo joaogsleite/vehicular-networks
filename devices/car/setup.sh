@@ -2,7 +2,7 @@
 
 
 # Configuration
-car_number="2"
+car_number="1"
 
 
 
