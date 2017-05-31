@@ -1,16 +1,22 @@
 import socket
 import json
 from time import time
+from threading import Thread
+
 
 PORT = 4173
 
 session = None
 
+def binding():
+    session.bind(('', PORT))
+
 def setup():
     global session
     print "creating socket..."
     session = socket.socket(socket.AF_INET6, socket.SOCK_DGRAM)
-    session.bind(('', PORT))
+    thread = Thread(target=binding, args=())
+    thread.start()
 
 
 def send(msg, ip):
@@ -25,7 +31,6 @@ def send(msg, ip):
 
 def receive():
     data, address = session.recvfrom(1024)
-    print 'received message: '+data
     data = json.loads(data)
     if int(time()) - int(data['time']) > 60:
         return None

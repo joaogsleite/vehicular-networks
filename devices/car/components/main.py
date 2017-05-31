@@ -7,7 +7,8 @@ from sensors import mindwave, fitbit, breathalyzer
 import devices.car.simulator.main as simulator
 
 running = False
-thread = None
+thread1 = None
+thread2 = None
 pre_test = True
 mock_gsp = False
 
@@ -15,23 +16,6 @@ def run_in_background():
 
     global running
     global pre_test
-    try:
-        print 'starting mindwave...'
-        mindwave.init()
-    except:
-        print "Error init mindwave"
-
-    try:
-        print 'starting alert leds...'
-        alerts.init()
-    except:
-        print "Error init alerts"
-
-    try:
-        print 'starting breathalyzer...'
-        breathalyzer.init()
-    except:
-        print "Error init breathalyzer"
 
     while pre_test:
         simulator.pre_test = True
@@ -39,8 +23,8 @@ def run_in_background():
         print 'blow test stated!'
         alerts.blow(True)
         for i in range(20):
-            print i + 1
             breathalyzer.update()
+            sleep(0.5)
 
         if breathalyzer.danger() is False:
             print 'blow test complete!'
@@ -57,13 +41,9 @@ def run_in_background():
                 gps.read()
             else:
                 gps.update()
-        except:
+        except Exception,e:
             print "No GPS"
-
-        try:
-            steering.update()
-        except:
-            print "No steering"
+            print e
 
         try:
             mindwave.update()
@@ -85,26 +65,68 @@ def run_in_background():
     alerts.shutdown()
 
 
-def simulator():
-    start_simulator()
-
 def stop():
     global running
-    global thread
+    global thread1
+    global thread2
     global pre_test
     print 'stoping sensors reading data...'
     running = False
     pre_test = False
+    
     try:
-        thread.join()
+        thread1.join()
+    except:
+        print ''
+
+    try:
+        simulator.stop()
+        thread2.join()
+    except:
+        print ''
+
+    try:
+        steering.stop()
     except:
         print ''
 
 
 def start():
-    global thread
+    global thread1
+    global thread2
     global running
     running = True
+
+    try:
+        print 'starting mindwave...'
+        mindwave.init()
+    except:
+        print "Error init mindwave"
+
+    try:
+        print 'starting alert leds...'
+        alerts.init()
+    except:
+        print "Error init alerts"
+
+    try:
+        print 'starting breathalyzer...'
+        breathalyzer.init()
+    except:
+        print "Error init breathalyzer"
+
+    try:
+        print 'starting steering...'
+        steering.start()
+    except:
+        print "No steering"
+
     print 'starting sensors background thread...'
-    thread = threading.Thread(target=run_in_background, args=())
-    thread.start()
+    thread1 = threading.Thread(target=run_in_background, args=())
+    thread1.start()
+
+
+    thread2 = threading.Thread(target=simulator.start, args=())
+    thread2.start()
+
+

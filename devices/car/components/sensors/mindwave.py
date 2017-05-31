@@ -1,7 +1,7 @@
 from mindwavemobile.MindwaveDataPointReader import MindwaveDataPointReader
 
 mindwaveDataPointReader = None
-attention = [50]
+attention = [50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50]
 buffer_index = 1
 
 
@@ -32,10 +32,9 @@ def get():
 
 def danger():
     global attention
-    med = sum(attention) / 20
-    d = med < 20
-    print 'mindwave danger: '+str(d)
-    return d
+    med = sum(attention) / len(attention)
+    print 'mindwave danger value: '+str(med)
+    return med < 20
 
 
 def set(value):

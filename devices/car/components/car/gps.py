@@ -25,6 +25,7 @@ def update():
     with open('/dev/ttyACM0', 'r') as f:
         for line in iter(f.readline, ''):
             if line.split(',')[0] == '$GPGGA':
+
                 lat_deg = float(line.split(',')[2]) // 100
                 lat_min = float(line.split(',')[2]) % 100
                 lat_sec = float(line.split(',')[2]) % 1
@@ -42,6 +43,7 @@ def update():
                 latitude = lat_fac * (lat_deg + ((lat_min + (lat_sec / 60)) / 60))
                 longitude = lon_fac * (lon_deg + ((lon_min + (lon_sec / 60)) / 60))
                 altitude = float(line.split(',')[9])
+                return
 
 
 def read():
