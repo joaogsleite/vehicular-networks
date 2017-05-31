@@ -6,6 +6,8 @@ from time import sleep
 steering = 0
 throttle = 0
 brake = 0
+buff = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+index = 1
 
 running = False
 global thread
@@ -13,7 +15,17 @@ global thread
 
 def danger():
     # TODO: @tiago algoritmo return True se esta bebado
-    return False
+    minimo = -20000
+    maximo = 20000
+    counter = 0
+    bebado = False
+
+    for i in buff:
+        if buff[i] <= -20000 or buff[i] >= 20000:
+            counter ++
+    if counter > 10:
+        bebado = True
+    return bebado
 
 
 def get():
@@ -60,6 +72,10 @@ def update():
         brake = int(line.split('2:')[1].split('3:')[0])
         sleep(0.1)
 
+        buff[index] = steering
+        index += 1
+        if index == 20:
+            index = 1
 
 def set(st, th, br):
     # set value for demonstration
