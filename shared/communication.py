@@ -47,11 +47,7 @@ def send(msg, ip):
 
 def receive():
     data, address = session.recvfrom(100000)
-    print 'receive: '+data
     data = json.loads(data)
-
-    print 'local time: '+str(time())
-    print 'message time: '+str(data['time'])
 
     if int(time()) - int(data['time']) > 60:
         return None

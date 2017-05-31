@@ -34,19 +34,14 @@ def waiting_msgs():
 
     while running:
         try:
-            print 'waiting for messages...'
             msg = communication.receive()
-            try:
                 if msg['carID'] == MYIP:
                     continue
-            except:
-                print ''
 
             print 'new message received: ' + str(msg)
 
-            if msg is not None:
-                print "Time exceeded"
-            elif msg['type'] == 3:
+
+            if msg['type'] == 3:
                 nearby.add(msg)
             elif msg['type'] == 6:
                 for car in msg['cars']:

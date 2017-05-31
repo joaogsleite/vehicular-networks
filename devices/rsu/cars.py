@@ -15,8 +15,18 @@ def list():
 
 def add(car):
     global cars
-    cars.append({
-        'carID'     : car['carID'],
-        'location'  : car['location'],
-        'date'      : int(time.time()),
-    })
+    to_add = True
+    for item in cars:
+        if car['carID'] == item['carID']:
+            to_add = False
+            item['location'] = car['location']
+            item['date'] = int(time.time())
+            break
+
+    if to_add:
+        cars.append({
+            'carID'     : car['carID'],
+            'location'  : car['location'],
+            'date'      : int(time.time()),
+        })
+
