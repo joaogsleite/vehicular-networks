@@ -8,7 +8,7 @@ import messagesITS as messages
 
 running = None
 FEEDBACK = 'STOP!'
-MYIP = "fc02::100"
+MYIP = "fc02::1001"
 
 
 def waiting_msgs():
@@ -27,7 +27,7 @@ def waiting_msgs():
 if __name__ == "__main__":
 
     # setup messages module
-    communication.server_setup()
+    communication.setup_its()
     running = True
 
     # waiting messages

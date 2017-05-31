@@ -15,10 +15,11 @@ session = None
   #  session.bind(('', PORT))
 
 
-def setup_old():
+def setup_its():
     global session
     print "creating socket..."
     session = socket.socket(socket.AF_INET6, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
+    session.bind(('', PORT, 0, 2))
 
 
 def setup():

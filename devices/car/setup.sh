@@ -56,6 +56,15 @@ sudo ifdown wlan0
 sudo ifup wlan0
 
 
+# NTP
+sudo chmod 777 /etc/ntp.conf
+sudo cp /etc/ntp.conf /etc/ntp.conf.old
+cat > /etc/ntp.conf <<- ENDCONF
+
+server fc01::101
+
+ENDCONF
+
 
 # Project setup
 # =========================

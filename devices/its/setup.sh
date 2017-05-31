@@ -30,4 +30,4 @@ ENDCONF
 
 # Run program
 # =========================
-python /home/pi/rv-project/devices/its/main.py &
+PYTHONPATH="/Users/joaoleite/Developer/rv-project/" python /Users/joaoleite/Developer/rv-project/devices/its/main.py

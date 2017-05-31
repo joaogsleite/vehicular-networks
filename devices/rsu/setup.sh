@@ -34,24 +34,12 @@ sudo ifdown wlan0
 sudo ifup wlan0
 
 
+# NTP
+sudo chmod 777 /etc/ntp.conf
+sudo cp /etc/ntp.conf /etc/ntp.conf.old
+cat > /etc/ntp.conf <<- ENDCONF
 
-# NTP Server
-sudo touch /etc/ntp-restrict.conf
-sudo chmod 777 /etc/ntp-restrict.conf
-sudo cp /etc/ntp-restrict.conf /etc/ntp-restrict.conf.old
-cat > /etc/ntp-restrict.conf <<- ENDCONF
-
-restrict default kod nomodify notrap nopeer noquery
-restrict -6 default kod nomodify notrap nopeer noquery
-
-restrict 127.0.0.1
-restrict -6 ::1
-
-# RV
-restrict -6 fc01::/64
-
-includefile /private/etc/ntp.conf
-includefile /private/etc/ntp_opendirectory.conf
+server fc02::1001
 
 ENDCONF
 
