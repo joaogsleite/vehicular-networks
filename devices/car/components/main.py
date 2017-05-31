@@ -8,6 +8,7 @@ from sensors import mindwave, fitbit, breathalyzer
 running = False
 thread = None
 pre_test = True
+mock_gsp = False
 
 
 def run_in_background():
@@ -16,27 +17,32 @@ def run_in_background():
     global pre_test
 
     try:
+        print 'starting mindwave...'
         mindwave.init()
     except:
         print "Error init mindwave"
 
     try:
+        print 'starting alert leds...'
         alerts.init()
     except:
         print "Error init alerts"
 
     try:
+        print 'starting breathalyzer...'
         breathalyzer.init()
     except:
         print "Error init breathalyzer"
 
     while pre_test:
+        print 'blow test stated!'
         alerts.blow(True)
         for i in range(20):
             print i + 1
             breathalyzer.update()
 
         if breathalyzer.danger() is False:
+            print 'blow test complete!'
             alerts.blow(False)
             pre_test = False
 
@@ -44,7 +50,10 @@ def run_in_background():
         print 'Updating values from car components'
 
         try:
-            gps.update()
+            if mock_gsp:
+                gps.read()
+            else:
+                gps.update()
         except:
             print "No GPS"
 
@@ -76,13 +85,20 @@ def run_in_background():
 def stop():
     global running
     global thread
+    global pre_test
+    print 'stoping sensors reading data...'
     running = False
-    thread.join()
+    pre_test = False
+    try:
+        thread.join()
+    except:
+        print ''
 
 
 def start():
     global thread
     global running
     running = True
+    print 'starting sensors background thread...'
     thread = threading.Thread(target=run_in_background, args=())
     thread.start()

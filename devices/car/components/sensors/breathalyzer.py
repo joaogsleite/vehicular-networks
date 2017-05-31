@@ -7,8 +7,8 @@ MOSI = 24
 CS   = 25
 
 mcp = None
-alcohol = []
-buffer_index = 0
+alcohol = [0]
+buffer_index = 1
 
 
 def init():
@@ -19,10 +19,11 @@ def init():
 def get():
     # return last alcohol value read from breathalyzer
     global alcohol
-    return alcohol
+    return alcohol[-1]
 
 
 def update():
+    print 'updating breathalyzer data'
     # read real value from breathalyzer
     global alcohol
     global buffer_index
@@ -37,13 +38,15 @@ def update():
     alcohol[buffer_index] = value
     buffer_index += 1
     if buffer_index == 20:
-        buffer_index = 0
+        buffer_index = 1
+
 
 def danger():
     global alcohol
     med = sum(alcohol) / 20
-    return med > 0.2
-
+    d = med > 0.2
+    print 'breathalyzer danger: '+str(d)
+    return d
 
 def set(value):
     # set value for demonstration

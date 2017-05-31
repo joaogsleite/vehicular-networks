@@ -10,6 +10,7 @@ from communication import my_id, send
 
 
 def car2car():
+    print 'sending msg v2v: driver state'
     send({
         'type':     1,
         'carID':    my_id(),
@@ -20,6 +21,7 @@ def car2car():
 
 
 def car2rsu():
+    print 'sending msg v2i: sensors data'
     sensors = json.dumps(driver.sensors())
     sensors = cipher(sensors)
     send({
@@ -33,6 +35,7 @@ def car2rsu():
 
 
 def rsu2cars():
+    print 'sending msg i2v: other cars'
     send({
         'type':     3,
         'rsuID':    my_id(),
@@ -42,6 +45,7 @@ def rsu2cars():
 
 
 def rsu2its(car, state, sensors):
+    print 'sending msg i2c: sensors data'
     send({
         'type':     4,
         'rsuID':    my_id(),
@@ -53,6 +57,7 @@ def rsu2its(car, state, sensors):
 
 
 def its2rsu(car, feedback):
+    print 'sending msg c2i: feedback'
     feedback = cipher(feedback)
     send({
         'type':     5,
@@ -64,6 +69,7 @@ def its2rsu(car, feedback):
 
 
 def rsu2car(feedback):
+    print 'sending msg i2v: feedback'
     send({
         'type':     6,
         'rsuID':    my_id(),

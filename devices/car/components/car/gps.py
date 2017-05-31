@@ -44,6 +44,20 @@ def update():
                 altitude = float(line.split(',')[9])
 
 
+def read():
+    # read real value from gps
+    global latitude
+    global longitude
+    global altitude
+
+    with open('/home/pi/rv-project/devices/car/components/car/gps.txt', 'r') as f:
+        for line in iter(f.readline, ''):
+            seconds = line.split(',')[0]
+            latitude = line.split(',')[1]
+            longitude = line.split(',')[2]
+            altitude = line.split(',')[3]
+
+
 def set(lat, lng, alt):
     # set value for demonstration
     global latitude

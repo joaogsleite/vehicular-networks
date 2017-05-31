@@ -18,6 +18,7 @@ class Handler(SimpleHTTPServer.SimpleHTTPRequestHandler):
             self.send_response(200)
             self.end_headers()
             self.wfile.write(json.dumps(info_car, ensure_ascii=False))
+            print 'simulator getting new value'
 
         else:
             f = open('.' + self.path)
