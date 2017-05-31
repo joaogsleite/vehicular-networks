@@ -2,6 +2,7 @@ import SimpleHTTPServer
 import SocketServer
 import json
 import socket
+from time import sleep
 
 from devices.car.components.car.steering import get
 
@@ -50,8 +51,9 @@ def start():
 def stop():
     print 'CLOSING HTTP SERVER'
     global httpd
-    httpd.shutdown()
-    httpd.server_close()
+    #httpd.shutdown()
+    #httpd.server_close()
+    sleep(0.5)
     httpd.socket.close()
 
 

@@ -71,6 +71,7 @@ html,body { background: #f5f5f5; }
 
 	var already_on = false;
 	var countdown = false;
+	var already_danger = false;
 
 	var timer = 60;
 
@@ -85,7 +86,7 @@ html,body { background: #f5f5f5; }
 		var throttle = (-data.throttle+32767)/65534;
 		//acceleration.innerHTML = Math.floor(throttle*140);
 
-		if(throttle>0.1 && (!data.pre_test) || (countdown && timer>0)){
+		if(throttle>0.1 && (!data.pre_test && !already_danger) || (countdown && timer>0)){
 			acceleration.getElementsByTagName('span')[0].innerHTML = "running"
 			direction = data.steering/320;
 			car.style.marginLeft = direction+"px";
@@ -111,6 +112,7 @@ html,body { background: #f5f5f5; }
 			danger.innerHTML = "Countdown to stop car: "+timer;
 		}
 		if(countdown && timer==0){
+		    already_danger = true
 			engine.getElementsByTagName('span')[0].innerHTML = "OFF"
 			acceleration.getElementsByTagName('span')[0].innerHTML = "stopped"
 			engine.style.backgroundColor = "#f00";
