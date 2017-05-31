@@ -1,37 +1,27 @@
-
 import socket
 import json
 from time import time
 
-ALL = "FF02::1"
-MYIP = "fd87:9ef2:9e19:34e1:0:0:0:1"
 PORT = 4173
 
 session = None
-
 
 def setup():
     global session
     print "creating socket..."
     session = socket.socket(socket.AF_INET6, socket.SOCK_DGRAM)
+    session.bind(('', PORT))
 
 
-def send(msg):
+def send(msg, ip):
+    if ip == "all":
+        ip = "ff02::1"
     msg = json.dumps(msg)
     print msg
     try:
-        session.sendto(msg, (ALL, PORT))
-    except socket.error, socket.timeout:
+        session.sendto(msg, (ip, PORT))
+    except:
         print 'error sending message'
-
-
-
-
-def my_id():
-    #hostname = socket.gethostname()
-    #hostname.split("fd87:9ef2:9e19:34e1:", 2)[1]
-    return MYIP
-
 
 def receive():
     data, address = session.recvfrom(1024)

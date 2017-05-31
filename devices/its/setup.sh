@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Configuration
-its_number="2"
+its_number="100"
 
 # Ad-hoc setup
 # =========================
@@ -14,19 +14,11 @@ iface eth0 inet6 static
     address fc02::$its_number
     netmask 64
 ENDINT
+
 #sudo ifdown wlan0
 #sudo ifup wlan0
 sudo ifdown eth0
 sudo ifup eth0
-
-#auto wlan0
-#iface wlan0 inet6 static
-#address fd87:9ef2:9e19:34e1:$its_number
-#netmask 64
-#wireless-channel 6
-#wireless-essid VehicularNet
-#wireless-mode ad-hoc
-
 
 # Install dependencies
 # =========================
