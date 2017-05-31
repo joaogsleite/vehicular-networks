@@ -10,6 +10,12 @@ def setup():
     global session
     print "creating socket..."
     session = socket.socket(socket.AF_INET6, socket.SOCK_DGRAM)
+
+
+def server_setup():
+    global session
+    print "creating socket..."
+    session = socket.socket(socket.AF_INET6, socket.SOCK_DGRAM)
     session.bind(('', PORT))
 
 

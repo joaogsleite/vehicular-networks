@@ -27,7 +27,7 @@ def waiting_msgs():
 if __name__ == "__main__":
 
     # setup messages module
-    communication.setup()
+    communication.server_setup()
     running = True
 
     # waiting messages

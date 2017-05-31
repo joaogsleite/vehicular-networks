@@ -1,5 +1,4 @@
 import signal
-import sys
 
 import cars
 from threading import Thread
@@ -9,17 +8,27 @@ import shared.communication as communication
 import messagesRSU as messages
 
 running = False
-MYIP = str(sys.argv[1])
+MYIP = "fc02::1"
+thread1 = None
+thread2 = None
+
 
 def run_in_background():
+    global running
+    global MYIP
+
     while running:
         messages.rsu2cars(myip)
+        sleep(5)
 
 
 def waiting_msgs():
+    global running
+
     while running:
+        print
         msg = communication.receive()
-        if msg == None:
+        if msg is None:
             print "Time exceeded"
         elif msg['type'] == 2:
             cars.add(msg)
@@ -38,10 +47,10 @@ if __name__ == "__main__":
     running = True
 
     # waiting messages
-    thread1 = Thread(target=waiting_msgs(), args=())
+    thread1 = Thread(target=waiting_msgs, args=())
     thread1.start()
 
-    thread2 = Thread(target=run_in_background(), args=())
+    thread2 = Thread(target=run_in_background, args=())
     thread2.start()
 
 

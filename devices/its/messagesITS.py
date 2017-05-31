@@ -1,6 +1,6 @@
 import time
 
-from communication import send
+from shared.communication import send
 from shared.security.rsa import cipher
 
 def its2rsu(car, feedback):

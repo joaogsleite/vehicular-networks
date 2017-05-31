@@ -2,7 +2,7 @@ import cars
 import time
 import json
 
-from communication import send
+from shared.communication import send
 
 def rsu2cars(myip):
     print 'sending msg i2v: other cars'
@@ -23,7 +23,7 @@ def rsu2its(car, state, sensors, myip):
         'state':    state,
         'sensors':  sensors,
         'time':     int(time.time())
-    }, "fc02::1")
+    }, "fc02::100")
 
 def rsu2car(feedback, ip, myip):
     print 'sending msg i2v: feedback'
