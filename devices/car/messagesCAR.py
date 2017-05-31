@@ -1,11 +1,10 @@
 
 import devices.car.components.car.gps as location
-#import devices.car.controllers.driver as driver
-import devices.rsu.cars as cars
+import devices.car.controllers.driver as driver
 import time
 import json
 
-from communication import send
+from shared.communication import send
 from shared.security.rsa import cipher
 
 

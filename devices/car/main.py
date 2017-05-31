@@ -4,20 +4,22 @@ from time import sleep
 import sys
 
 import devices.car.controllers.nearby as nearby
+import devices.car.components.sensors.breathalyzer as breathalyzer
 import devices.car.components.car.alerts as alerts
 import devices.car.components.main as components
 import shared.communication as communication
 import messagesCAR as messages
-import devices.car.simulator.simulator
 
 running = False
+pre_test = False
 thread1 = None
 thread2 = None
-MYIP = sys.argv[1]
+MYIP = None
 
 
 def sending_msgs():
     global running
+    global MYIP
     while running:
         print 'sending messages...'
         messages.car2car(MYIP)
@@ -27,6 +29,17 @@ def sending_msgs():
 
 def waiting_msgs():
     global running
+    global pre_test
+
+    while pre_test:
+        alerts.blow(True)
+        for i in range(20):
+            breathalyzer.update()
+
+        if not breathalyzer.danger():
+            pre_test = False
+            alerts.blow(False)
+
     while running:
         try:
             print 'waiting for messages...'
@@ -46,19 +59,22 @@ def waiting_msgs():
 
 if __name__ == "__main__":
 
+    MYIP = sys.argv[1]
     # start car components (reading values)
     if sys.argv[2] == 'primary':
         print 'PRIMARY CAR'
         if sys.argv[3] is not None:
             components.mock_gsp = True
+        pre_test = True
         components.start()
-        simulator.start()
     else:
         print 'SECONDARY CAR'
+        pre_test = False
         alerts.init()
 
     # setup messages module
     communication.setup()
+
 
     # decision block running
     running = True
@@ -78,7 +94,6 @@ def signal_handler(signal, frame):
     global thread2
 
     running = False
-
 
     print "Stop sensors updates..."
     components.stop()

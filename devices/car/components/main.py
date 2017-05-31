@@ -4,18 +4,17 @@ from time import sleep
 
 from devices.car.components.car import gps, steering, alerts
 from sensors import mindwave, fitbit, breathalyzer
+import devices.car.simulator.main as simulator
 
 running = False
 thread = None
 pre_test = True
 mock_gsp = False
 
-
 def run_in_background():
 
     global running
     global pre_test
-
     try:
         print 'starting mindwave...'
         mindwave.init()
@@ -35,6 +34,8 @@ def run_in_background():
         print "Error init breathalyzer"
 
     while pre_test:
+        simulator.pre_test = True
+        simulator.running = True
         print 'blow test stated!'
         alerts.blow(True)
         for i in range(20):
@@ -45,8 +46,10 @@ def run_in_background():
             print 'blow test complete!'
             alerts.blow(False)
             pre_test = False
+            simulator.pre_test = False
 
     while running:
+        simulator.running = True
         print 'Updating values from car components'
 
         try:
@@ -81,6 +84,9 @@ def run_in_background():
 
     alerts.shutdown()
 
+
+def simulator():
+    start_simulator()
 
 def stop():
     global running

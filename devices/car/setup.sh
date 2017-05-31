@@ -40,7 +40,7 @@ exec 2> /tmp/rc.local.log       # send stderr from rc.local to a log file
 exec 1>&2                       # send stdout to the same log file
 set -x                          # tell sh to display commands before execution
 
-PYTHONPATH="/home/pi/rv-project" python /home/pi/rv-project/devices/car/main.py primary &
+PYTHONPATH="/home/pi/rv-project" python /home/pi/rv-project/devices/car/main.py "fc01::1" "primary" &
 
 ENDRC
 

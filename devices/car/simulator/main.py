@@ -4,7 +4,9 @@ import json
 import socket
 
 from devices.car.components.car.steering import get
-from devices.car.main import pre_test, running
+
+pre_test = None
+running = None
 
 
 class Handler(SimpleHTTPServer.SimpleHTTPRequestHandler):
@@ -36,11 +38,11 @@ class V6Server(SocketServer.TCPServer):
     address_family = socket.AF_INET6
 
 
-def start():
+def start_simulator():
     print('Server listening...')
     httpd = V6Server(('', 8080), Handler)
     httpd.serve_forever()
 
 
 if __name__ == "__main__":
-    start()
+    start_simulator()
