@@ -49,10 +49,10 @@ def receive():
     data, address = session.recvfrom(100000)
     data = json.loads(data)
 
-    if int(time()) - int(data['time']) > 60:
-        return None
-    else:
-        return data
+    #if int(time()) - int(data['time']) > 60:
+    #    return None
+    #else:
+    return data
 
 
 def shutdown():

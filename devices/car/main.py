@@ -53,7 +53,7 @@ def waiting_msgs():
                     print 'new nearby car'
                     nearby.add(car)
 
-            elif msg['type'] == 6 and msg['carID'] == MYIP:
+            elif msg['type'] == 6:
                 print "================="
                 print "FEEDBACK RECEIVED: "
                 feedback = msg['feedback']
