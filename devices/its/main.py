@@ -14,11 +14,17 @@ MYIP = "fc02::1001"
 def waiting_msgs():
     while running:
         msg = communication.receive()
+
+        if msg is None:
+            continue
         if msg['type'] == 4:
             sensors = decipher(msg['sensors'])
+            print "==============================="
             print "Message received from car "+msg['carID']
             print "Sensors data: "+sensors
+            print "\n\n\n"
             messages.its2rsu(msg['carID'], FEEDBACK)
+
 
 if __name__ == "__main__":
 

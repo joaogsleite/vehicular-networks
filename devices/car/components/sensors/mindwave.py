@@ -33,7 +33,7 @@ def get():
 def danger():
     global attention
     med = sum(attention) / len(attention)
-    print 'mindwave danger value: '+str(med)
+    print 'mindwave value: '+str(med)
     return med < 20
 
 

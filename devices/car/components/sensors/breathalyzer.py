@@ -34,6 +34,8 @@ def update():
     value = 1.9 * value / 1024.0
     value = round(value, 2)
 
+    print "alcohol level: "+str(value)
+
     alcohol[buffer_index] = value
     buffer_index += 1
     if buffer_index == 20:

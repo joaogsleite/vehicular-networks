@@ -15,6 +15,8 @@ thread1 = None
 thread2 = None
 MYIP = None
 
+from shared.security.rsa import decipher
+
 
 def sending_msgs():
     global running
@@ -35,18 +37,30 @@ def waiting_msgs():
     while running:
         try:
             msg = communication.receive()
-                if msg['carID'] == MYIP:
-                    continue
 
-            print 'new message received: ' + str(msg)
+            if msg is None:
+                continue
 
+            if msg['carID'] == MYIP:
+                continue
 
-            if msg['type'] == 3:
+            print 'new message received'
+
+            if msg['type'] == 1:
                 nearby.add(msg)
-            elif msg['type'] == 6:
+            elif msg['type'] == 3:
                 for car in msg['cars']:
                     print 'new nearby car'
                     nearby.add(car)
+
+            elif msg['type'] == 6 and msg['carID'] == MYIP:
+                print "================="
+                print "FEEDBACK RECEIVED: "
+                feedback = msg['feedback']
+                feedback = decipher(feedback)
+                print feedback
+                print "\n\n"
+
         except Exception,e:
             print "Error receiving msg"
             print e

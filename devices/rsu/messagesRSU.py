@@ -24,13 +24,14 @@ def rsu2its(car, state, sensors, myip):
         'state':    state,
         'sensors':  sensors,
         'time':     int(time.time())
-    }, "fc02::1001")
+    }, "all")
 
 def rsu2car(feedback, ip, myip):
     print 'sending msg i2v: feedback'
     send({
+        'carID':    ip,
         'type':     6,
         'rsuID':    myip,
         'feedback': feedback,
         'time':     int(time.time())
-    }, ip)
+    }, 'all')

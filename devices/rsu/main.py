@@ -26,7 +26,7 @@ def waiting_msgs():
     global running
 
     while running:
-        print ''
+
         msg = communication.receive()
         if msg is None:
             print "Time exceeded"

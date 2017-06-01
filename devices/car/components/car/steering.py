@@ -14,18 +14,21 @@ global thread
 
 
 def danger():
-    # TODO: @tiago algoritmo return True se esta bebado
-    minimo = -20000
-    maximo = 20000
-    counter = 0
-    bebado = False
 
-    for i in buff:
-        if buff[i] <= -20000 or buff[i] >= 20000:
-            counter ++
-    if counter > 10:
-        bebado = True
-    return bebado
+    global buff
+
+    minimo = -29000
+    maximo = 29000
+
+    counter = 0
+    d = False
+
+    for value in buff:
+        if value <= minimo or value >= maximo:
+            counter = counter + 1
+    if counter > 25:
+        d = True
+    return d
 
 
 def get():
@@ -47,6 +50,12 @@ def stop():
 
 def start():
     global running
+    global buff
+    global index
+
+    buff = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    index = 1
+
     running = True
 
     thread = threading.Thread(target=update, args=())
@@ -61,8 +70,10 @@ def update():
     global throttle
     global brake
 
+    global buff
+    global index
+
     while running:
-        # TODO: @tiago melhorar esta merda
         command = 'timeout 0.1s jstest --normal /dev/input/js0'
         output = os.popen(command).read()
         line = output.split('Axes:')[-1]
@@ -74,7 +85,7 @@ def update():
 
         buff[index] = steering
         index += 1
-        if index == 20:
+        if index == 100:
             index = 1
 
 def set(st, th, br):

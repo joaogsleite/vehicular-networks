@@ -8,8 +8,8 @@ def its2rsu(car, feedback):
     feedback = cipher(feedback)
     send({
         'type':     5,
-        'itsID':    "fc02::100",
+        'itsID':    "fc02::1001",
         'carID':    car,
         'feedback': feedback,
         'time':     int(time.time())
-    })
+    }, 'fc01::101')

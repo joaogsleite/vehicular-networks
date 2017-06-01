@@ -10,24 +10,23 @@ PORT = 4173
 session = None
 
 
-#def binding():
- #   session.setsockopt(socket.IPPROTO_IPV6, socket.IPV6_JOIN_GROUP, 'ff02::1%wlan0')
-  #  session.bind(('', PORT))
+def binding():
+    global session
+    session.bind(('', PORT, 0, 2))
 
 
 def setup_its():
     global session
     print "creating socket..."
     session = socket.socket(socket.AF_INET6, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
-    session.bind(('', PORT, 0, 2))
+    thread = Thread(target=binding, args=())
+    thread.start()
 
 
 def setup():
     global session
     print "creating socket..."
     session = socket.socket(socket.AF_INET6, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
-    #thread = Thread(target=binding, args=())
-    #thread.start()
 
     session.bind(('', PORT, 0, 2))
     session.setsockopt(socket.IPPROTO_IPV6, socket.IPV6_JOIN_GROUP, socket.inet_pton(socket.AF_INET6, "ff02::1")+'\0'*4)
@@ -41,7 +40,8 @@ def send(msg, ip):
     print msg
     try:
         session.sendto(msg, (ip, PORT))
-    except:
+    except Exception,e:
+        print e
         print 'error sending message'
 
 
