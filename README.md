@@ -1,16 +1,7 @@
 
-# RV Project
-## Group 2
+# Vehicular Networks project
 
-## Members
-* Joao Leite, ist177907
-* Joao Tomazio, ist178039
-* Tiago Fernandes, ist177896
-* Luis Pereira, ist177984
-
-
----
-
+Vehicular ad hoc network project to monitor and share driver state
 
 ## Setup
 
